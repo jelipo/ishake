@@ -2,19 +2,18 @@ package com.jelipo.ishake.core;
 
 import com.jelipo.ishake.core.pojo.Data;
 
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Method;
 
 
 public class Main {
 
     public static void main(String[] args) {
-        var data = new Data("", 1);
-        var num = data.num();
-
-        var map = new HashMap<String, Integer>();
-        var easy = map.put("easy", 1);
-
-        List<Integer> integers = List.of(1).stream().toList();
+        for (Method method : Data.class.getMethods()) {
+            System.out.println(method.getName() + ":" + method.hashCode());
+            var methodHashCode = switch (method.getParameterCount()) {
+                case 0 -> method.hashCode();
+                default -> 
+            }
+        }
     }
 }

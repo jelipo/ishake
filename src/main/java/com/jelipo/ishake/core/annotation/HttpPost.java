@@ -1,6 +1,6 @@
 package com.jelipo.ishake.core.annotation;
 
-public @interface HttpMethod {
+public @interface HttpPost {
 
     /**
      * PATH+QUERY值 <p>
