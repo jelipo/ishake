@@ -9,11 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
         for (Method method : Data.class.getMethods()) {
-            System.out.println(method.getName() + ":" + method.hashCode());
-            var methodHashCode = switch (method.getParameterCount()) {
-                case 0 -> method.hashCode();
-                default -> 
-            }
+
         }
     }
+
+
 }

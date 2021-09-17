@@ -1,10 +1,8 @@
 package com.jelipo.ishake.core.http;
 
-import com.jelipo.ishake.core.common.HttpMethod;
 import com.jelipo.ishake.core.common.Pair;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -14,9 +12,9 @@ import java.util.Collection;
 
 public class ShakeClient {
 
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
 
-    private URI uri;
+    private final URI uri;
 
     public ShakeClient(HttpClient httpClient, String uri) {
         this.httpClient = httpClient;
@@ -34,7 +32,15 @@ public class ShakeClient {
         return new ShakeClient(httpClient, uri);
     }
 
-    public void request(
+    /**
+     * 使用Java自带的HttpClient发送Request请求
+     *
+     * @param httpMethod    Http方法
+     * @param timeout       超时时间(秒)
+     * @param httpBodyBytes Http请求的Body，可以为null
+     * @return 返回Http请求的Response，body为byte[]
+     */
+    public HttpResponse<byte[]> request(
             HttpMethod httpMethod,
             long timeout,
             Collection<Pair> headers,
@@ -46,9 +52,12 @@ public class ShakeClient {
         var builder = HttpRequest.newBuilder(this.uri)
                 .timeout(Duration.ofSeconds(timeout))
                 .method(httpMethod.name(), bodyPublisher);
-        headers.forEach(headerPair -> builder.setHeader(headerPair.left(), headerPair.right()));
+        // 添加Header
+        if (headers != null && headers.size() != 0) {
+            headers.forEach(headerPair -> builder.setHeader(headerPair.left(), headerPair.right()));
+        }
         // 使用HttpClient发送Request
-        var response = this.httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofByteArray());
+        return this.httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofByteArray());
     }
 
 }
