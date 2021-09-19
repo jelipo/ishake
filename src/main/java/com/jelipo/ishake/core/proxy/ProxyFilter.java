@@ -8,12 +8,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Set;
 
+/**
+ * @author jelipo
+ */
 public class ProxyFilter implements CallbackFilter {
 
     /**
      * Http方法注解的Class的Hashcode的Set集合
      */
-    private static final Set<Integer> httpClassHashSet = Set.of(
+    private static final Set<Integer> HTTP_CLASS_HASH_SET = Set.of(
             HttpGet.class.getName().hashCode(),
             HttpPost.class.getName().hashCode()
     );
@@ -28,7 +31,7 @@ public class ProxyFilter implements CallbackFilter {
         var annotations = method.getAnnotations();
         for (Annotation annotation : annotations) {
             var annHashCode = annotation.annotationType().getName().hashCode();
-            if (httpClassHashSet.contains(annHashCode)) {
+            if (HTTP_CLASS_HASH_SET.contains(annHashCode)) {
                 return 1;
             }
         }
