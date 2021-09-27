@@ -23,10 +23,6 @@ public class ProxyFilter implements CallbackFilter {
 
     @Override
     public int accept(Method method) {
-        var integers = Set.of(
-                HttpGet.class.getName().hashCode(),
-                HttpPost.class.getName().hashCode()
-        );
         // 检查注解
         var annotations = method.getAnnotations();
         for (Annotation annotation : annotations) {

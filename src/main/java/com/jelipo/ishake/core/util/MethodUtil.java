@@ -25,4 +25,8 @@ public class MethodUtil {
         }
         return hashCode;
     }
+
+    public String test() {
+        return "Hello world";
+    }
 }
