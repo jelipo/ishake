@@ -7,12 +7,12 @@ version = "0.0.1"
 
 repositories {
     maven("https://repo.huaweicloud.com/repository/maven/")
+    mavenCentral()
 }
 
 dependencies {
-    implementation("cglib:cglib:3.3.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.0")
 }
 
 tasks.getByName<Test>("test") {
