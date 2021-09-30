@@ -1,20 +1,20 @@
 package com.jelipo.ishake.core.proxy;
 
-import java.lang.reflect.Proxy;
-
 public class ProxyManager {
+
+    private final ObjProxyCache objProxyCache;
 
     private final InvokeHandler invokeHandler;
 
     public ProxyManager() {
-        this.invokeHandler = new InvokeHandler();
+        this.objProxyCache = new ObjProxyCache();
+        this.invokeHandler = new InvokeHandler(objProxyCache);
     }
 
-    public <T> T getProxy(Class<T> clazz) throws IllegalArgumentException {
-        if (!clazz.isInterface()) {
-            throw new IllegalArgumentException(clazz.getName() + " is not an interface class");
-        }
-        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this.invokeHandler);
+    private <T> T buildNewProxyObj(String host, Class<T> clazz) {
+        T proxyObj = ProxyFactory.newProxyObj(clazz, this.invokeHandler);
+        objProxyCache.put(host, proxyObj);
+        return proxyObj;
     }
 
 }
